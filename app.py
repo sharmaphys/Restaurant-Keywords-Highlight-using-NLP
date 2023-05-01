@@ -45,7 +45,7 @@ remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 icon("search")
 #selected = 'The Stillery' # just for default
-selected = st.text_input("", "Search...")
+selected = st.text_input("Restaurant Name?", "")
 button_clicked = st.button("ok")
 
 #
@@ -110,7 +110,7 @@ def fancy_html(rest_name, star_rating,total_reviews,categories,positive,negative
 <td style="background-color: """+ left_col_colour +""";"><span style="color: #ffffff;">Positive Factors</span></td>
 <td style="width: 200px;background-color: """+ right_col_colour +""";">{}</td>""".format(Positives) + """
 <tr>
-<td style="background-color: """+ left_col_colour +""";"><span style="color: #ffffff;">Positive Factors</span></td>
+<td style="background-color: """+ left_col_colour +""";"><span style="color: #ffffff;">Negative Factors</span></td>
 <td style="width: 200px;background-color: """+ right_col_colour +""";">{}</td>""".format(Negatives) + """
 </tr>
 </tbody>

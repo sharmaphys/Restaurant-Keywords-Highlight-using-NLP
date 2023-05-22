@@ -6,6 +6,30 @@ import folium
 import branca
 
 
+from sqlalchemy import create_engine
+import os
+URL_DB = os.getenv("URL_DB")
+def read_db():
+    """
+    Returns the pandas dataframe to work with.
+    """
+    engine = create_engine(URL_DB)
+    query = text(
+        """
+        SELECT * FROM test_db
+        """
+    )
+    with engine.connect() as conn:
+        results = ( conn
+                   .execute(query)
+                   .fetchall()
+        )
+        #df = pd.read_sql(query, con=conn)
+        test_csv = results.to_csv('test.csv')
+    return test_csv
+        
+
+
 
 #title
 st.title(":green[Nashville Restaurants at a Glance.]")
@@ -18,12 +42,15 @@ DATA_URL = (
     'nashville_restaurants_with_reviews.csv'
 )
 
+#mycsv=read_db()
+
 @st.cache_data(persist=True)
 def load_data():
     data = pd.read_csv('nashville_restaurants_with_reviews.csv')
     return data
 
 df = load_data()
+
 
 #search for the restaurant name
 st.header('**:green[Search your restaurant below:]**')
@@ -48,9 +75,7 @@ icon("search")
 selected = st.text_input("Restaurant Name?", "")
 button_clicked = st.button("ok")
 
-#
-#if not selected:
-#selected = 'The Stillery'
+
 lat=df[df['name'].str.lower().str.contains(selected)]['latitude'].iloc[0]
 long=df[df['name'].str.lower().str.contains(selected)]['longitude'].iloc[0]
 rest_name = df[df['name'].str.lower().str.contains(selected)]['name'].iloc[0]
@@ -62,7 +87,7 @@ categories = df[df['name'].str.lower().str.contains(selected)]['categories'].ilo
 #define color according to the star rating
 if star_rating <=2:
     color ='red'
-elif star_rating >2 and star_rating <= 4.0:
+elif star_rating >2 and star_rating < 4.0:
     color = 'orange'
 else:
     color='green'

@@ -9,4 +9,4 @@ This sort of information on aspects within a review will help customer to quickl
 
 The web application developed is can be visited with this link:
 
-https://nashville-restaurants.onrender.com/)
+https://nashville-restaurants.onrender.com/
